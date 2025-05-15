@@ -3,7 +3,7 @@
 #include <openssl/evp.h>
 #include <openssl/aes.h>
 #include <openssl/rand.h>
-#include <include/encryption.h>
+#include <encryption.h>
 
 class Encryptor {
 private:
