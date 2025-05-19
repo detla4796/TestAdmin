@@ -1,0 +1,13 @@
+ivan;Mathematics;Discrete Mathematics;1/2;2
+ivan;Mathematics;Discrete Mathematics;1/2;2
+ivan;Mathematics;Discrete Mathematics;1/2;2
+ivan;Mathematics;Discrete Mathematics;1/2;2
+ivan;Mathematics;Discrete Mathematics;1/2;2
+ivan;Mathematics;Discrete Mathematics;1/2;2
+ivan;Mathematics;Discrete Mathematics;2/2;5
+ivan;Mathematics;Discrete Mathematics;2/3;3
+ivan;Mathematics;Discrete Mathematics;0/3;2
+ivan;Mathematics;Discrete Mathematics;3/3;5
+ivan;Mathematics;Discrete Mathematics;4/4;5
+ivan;Mathematics;Discrete Mathematics;5/5;5
+ivan;Mathematics;Discrete Mathematics;4/5;4

@@ -90,25 +90,12 @@ public:
     }
 };
 
-// Example usage
-int main() {
-    try {
-        Encryptor encryptor;
-        std::string original = "Hello, OpenSSL encryption!";
-        std::cout << "Original text: " << original << std::endl;
+static Encryptor encryptor;
 
-        // Encrypt the text
-        std::string encrypted = encryptor.encrypt(original);
-        std::cout << "Encrypted length: " << encrypted.length() << " bytes" << std::endl;
+std::string encrypt(const std::string& plaintext) {
+    return encryptor.encrypt(plaintext);
+}
 
-        // Decrypt the text
-        std::string decrypted = encryptor.decrypt(encrypted);
-        std::cout << "Decrypted text: " << decrypted << std::endl;
-
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return 1;
-    }
-
-    return 0;
+std::string decrypt(const std::string& ciphertext) {
+    return encryptor.decrypt(ciphertext);
 }

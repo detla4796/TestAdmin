@@ -1,0 +1,5 @@
+Mathematics;Discrete Mathematics;What is the result of 2+2?;4
+Mathematics;Discrete Mathematics;What is the result of 5+3?;8
+Mathematics;Discrete Mathematics;What is the result of 2+3?;5
+Mathematics;Discrete Mathematics;What is the result of 8+3?;11
+Mathematics;Discrete Mathematics;What is the result of 2,2+3,5?;5,7
