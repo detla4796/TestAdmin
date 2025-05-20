@@ -1,52 +1,65 @@
 #include <iostream>
 #include "include/test.h"
+#include "include/auth.h"
+#include "include/user.h"
 
 using namespace std;
 
-int main()
+int main() 
 {
-    TestManager::loadTests("tests.txt");
-    cout << "Tests successfully loaded from tests.txt" << endl;
+    int choice;
+    cout << "Welcome to the Testing System!" << endl;
+    cout << "1. Register" << endl;
+    cout << "2. Login" << endl;
+    cout << "Enter your choice: ";
+    cin >> choice;
 
-    TestManager::showCategories();
-    int categoryNum;
-    cout << "Enter category number: ";
-    cin >> categoryNum;
-    
-    vector<string> categories;
-    for (const auto& [cat, _] : TestManager::tests) 
+    string currentLogin;
+
+    switch (choice) 
     {
-        categories.push_back(cat);
+        case 1:
+            registerUser();
+            break;
+        case 2:
+            if (loginUser()) 
+            {
+                cout << "You are now logged in." << endl;
+                cout << "Enter your login again to proceed: ";
+                cin >> currentLogin;
+
+                User currentUser("John Doe", "123 Main St", "555-1234", currentLogin, "encrypted_password");
+                
+                while (true) 
+                {
+                    cout << "\nWhat would you like to do?" << endl;
+                    cout << "1. View Test Results" << endl;
+                    cout << "2. Take a Test" << endl;
+                    cout << "3. Logout" << endl;
+                    cout << "Enter your choice: ";
+                    cin >> choice;
+
+                    switch (choice) 
+                    {
+                        case 1:
+                            currentUser.viewResults();
+                            break;
+                        case 2:
+                            // currentUser.testTake();
+                            cout << "This feature is not implemented yet." << endl;
+                            break;
+                        case 3:
+                            cout << "Logging out..." << endl;
+                            return 0;
+                        default:
+                            cout << "Invalid choice. Please try again." << endl;
+                    }
+                }
+            }
+            break;
+        default:
+            cout << "Invalid choice. Please try again." << endl;
     }
-    
-    if (categoryNum < 1 || categoryNum > categories.size()) 
-    {
-        cout << "Invalid category number!" << endl;
-        return 1;
-    }
-    
-    string category = categories[categoryNum - 1];
-    
-    TestManager::showTestsInCategory(category);
-    int testNum;
-    cout << "Enter test number: ";
-    cin >> testNum;
-    
-    vector<string> tests;
-    for (const auto& [name, _] : TestManager::tests[category]) 
-    {
-        tests.push_back(name);
-    }
-    
-    if (testNum < 1 || testNum > tests.size()) 
-    {
-        cout << "Invalid test number!" << endl;
-        return 1;
-    }
-    
-    string testName = tests[testNum - 1];
-    string username = "ivan";
-    TestManager::runTest(category, testName, username);
 
     return 0;
 }

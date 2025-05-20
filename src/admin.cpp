@@ -1,6 +1,7 @@
 #include "include/admin.h"
 #include "include/utils.h"
 
+
 Admin::Admin(const string& login, const string& encrypted_pass)
     : login(login), encrypted_pass(encrypted_pass) {}
 
