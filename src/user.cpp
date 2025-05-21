@@ -1,5 +1,6 @@
 #include "include/user.h"
 #include "include/utils.h"
+#include "include/test.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -58,5 +59,38 @@ void User::viewResults() const
 
 void User::testTake() const 
 {
+    TestManager::loadTests("tests.txt");
+    TestManager::showCategories();
+    int catNum;
+    cout << "Select a category: ";
+    cin >> catNum;
 
+    vector<string> categories;
+    for (const auto& [cat, _] : TestManager::tests) 
+    {
+        categories.push_back(cat);
+    }
+    if (catNum < 1 || catNum > categories.size()) 
+    {
+        cout << "Invalid category number." << endl;
+        return;
+    }
+    string category = categories[catNum - 1];
+
+    TestManager::showTestsInCategory(category);
+    int testNum;
+    cout << "Select a test: ";
+    cin >> testNum;
+    vector<string> tests;
+    for (const auto& [name, _] : TestManager::tests[category]) 
+    {
+        tests.push_back(name);
+    }
+    if (testNum < 1 || testNum > tests.size()) 
+    {
+        cout << "Invalid test number." << endl;
+        return;
+    }
+    string testName = tests[testNum - 1];
+    TestManager::runTest(category, testName, login);
 }

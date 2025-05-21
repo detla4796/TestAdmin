@@ -1,0 +1,21 @@
+detla
+What is the result of 2+2?;4;1
+What is the result of 5+3?;8;1
+What is the result of 2+3?;5;1
+What is the result of 8+3?;11;1
+What is the result of 2,2+3,5?;5,7;1
+-143425839
+Danil
+What is the result of 2+2?;4;0
+What is the result of 5+3?;8;0
+What is the result of 2+3?;5;0
+What is the result of 8+3?;11;0
+What is the result of 2,2+3,5?;5,7;0
+2104196913
+detla
+What is the result of 2+2?;4;0
+What is the result of 5+3?;8;0
+What is the result of 2+3?;5;0
+What is the result of 8+3?;11;0
+What is the result of 2,2+3,5?;5,7;0
+2104196913

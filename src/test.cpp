@@ -11,9 +11,26 @@ void Test::startTest()
     for (size_t i = 0; i < questions.size(); i++) 
     {
         cout << "Question " << i + 1 << ": " << questions[i] << endl;
-        cout << "Your answer: ";
+        cout << "Your answer (or type 'exit' to quit the test): ";
         string userAnsw;
         cin >> userAnsw;
+        if (userAnsw == "exit") 
+        {
+            cout << "Do you want to save your progress? (y/n): ";
+            char choice;
+            cin >> choice;
+
+            if (choice == 'y' || choice == 'Y') 
+            {
+                cout << "Enter your username to save progress: ";
+                string username;
+                cin >> username;
+                saveProgress(username);
+            }
+
+            cout << "Test interrupted. Progress saved if requested." << endl;
+            return;
+        }
         if (userAnsw == answers[i].first) 
         {
             answers[i].second = 1;
@@ -119,7 +136,24 @@ void TestManager::runTest(const string& category, const string& testName, const 
     if (tests.count(category) && tests[category].count(testName)) 
     {
         Test& t = tests[category][testName];
+        if(t.loadProgress(username))
+        {
+            cout << "Do you want to continue the saved test? (y/n): ";
+            char choice;
+            cin >> choice;
+            if (choice != 'y' && choice != 'Y')
+            {
+                t = Test(testName, {}, {}); // reset
+            }
+        }
         t.startTest();
+        cout << "Do you want to save your progress? (y/n): ";
+        char choice;
+        cin >> choice;
+        if (choice == 'y' || choice == 'Y')
+        {
+            t.saveProgress(username);
+        }
         t.displayResults();
 
         int correct = 0;
@@ -140,3 +174,64 @@ void TestManager::runTest(const string& category, const string& testName, const 
     }
 }
 
+void Test::saveProgress(const string& username) const 
+{
+    ofstream file("saved_test.txt", ios::app);
+    if (!file.is_open()) 
+    {
+        cout << "Error: Unable to open file for saving progress." << endl;
+        return;
+    }
+    file << username << endl;
+    for (size_t i = 0; i < answers.size(); i++)
+    {
+        file << questions[i] << ";" << answers[i].first << ";" << answers[i].second << endl;
+    }
+    file << questionIndex << endl;
+    file.close();
+    cout << "Progress saves successfully!" << endl;
+}
+
+bool Test::loadProgress(const string& username)
+{
+    ifstream file("saved_test.txt");
+    if (!file.is_open())
+    {
+        cout << "Error: Unable to open file for loading progress." << endl;
+        return false;
+    }
+    string line;
+    while (getline(file, line))
+    {
+        stringstream ss(line);
+        string savedUsername, testName;
+        getline(ss, savedUsername, ';');
+        getline(ss, testName, ';');
+
+        if(savedUsername == username && testName == name)
+        {
+            questions.clear();
+            answers.clear();
+            questionIndex = 0;
+            string data;
+            while (getline(ss, data, ';'))
+            {
+                if (data.empty()) continue;
+                int index = data.find(':');
+                int index2 = data.find(':', index + 1);
+                string question = data.substr(0, index);
+                string answer = data.substr(index + 1, index2 - index - 1);
+                int isCorrect = stoi(data.substr(index2 + 1));
+                questions.push_back(question);
+                answers.emplace_back(answer, isCorrect);
+            }
+            ss >> questionIndex;
+            cout << "Test progress loaded successfully!" << endl;
+
+            file.close();
+            return true;
+        }
+    }
+    file.close();
+    return false;
+}
